@@ -1,0 +1,98 @@
+html,body{
+    padding: 0px;
+    margin: 0px;
+    background-color: #edf0f5;
+} 
+
+.page{
+    margin-left:13em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;/*Full height*/
+}
+
+.terminal{
+    display: flex;
+    flex-direction: column;
+    border:1px #ffffff solid;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+    background-color:#202020;
+    display: flex;
+    width: 90%;
+    height: 85vh;
+    margin-bottom:0px;
+}
+
+.terminal body{
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+    background-color:#202020;
+    width: 100%;
+    height: 100%;
+    margin-top:5px;
+    overflow: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-color: #ffffff2f;
+}
+
+.commands{
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+    color: #ffffff;
+    font-family: SFProDisplay-Regular, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    padding: 10px 20px 10px 20px;
+}
+
+.inp{
+    height: 40px;
+    padding: 10px 20px 10px 20px;
+    margin-bottom: 15px;
+    background-color:#202020;
+    color: #ffffff;
+    border:none;
+    outline: none;
+    border-top:1px #303030 solid;
+    font-family: SFProDisplay-Regular, Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: normal;
+}
+.inp2{
+    margin: 0px;
+}
+
+
+
+.nav-class{
+    position: fixed;
+    left: 0;
+    height: 100%;
+    width: 13em;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    background-color: #505050;
+}
+  
+.nav-items p{
+    font-size: 17px;
+    font-weight: normal;
+    font-family: SFProDisplay-Regular, Helvetica, Arial, sans-serif;
+    color:#ffffff;
+    padding: 15px 15px 15px 20px;
+    margin: 0px;
+    border-bottom: 3px rgba(60, 60, 60, 0.20) solid;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+.nav-items p:hover{
+    cursor: pointer;
+    background-color: #606060;
+}
