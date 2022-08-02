@@ -6,7 +6,8 @@
   "scripts": {
     "start": "npm run front && npm run back",
     "front": "cd react/ && npx webpack --mode production && rm ./public/*.LICENSE.txt",
-    "back": "node server/server.js"
+    "back": "node server/server.js",
+    "install-all": "npm install --force"
   },
   "author": "Geovane Morais",
   "license": "ISC",
