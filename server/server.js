@@ -3,11 +3,13 @@ const path = require('path');
 const application = express();
 const favicon = require('serve-favicon');
 const port = 3333;
-
 const bodyParser = require('body-parser');
 
-const {ssh, commands} = require('./ssh');
-let config = {host:"",username:"",password:"",port:""} 
+const fs = require('fs');
+const {NodeSSH} = require('node-ssh');
+const ssh = new NodeSSH();
+
+const testRSDs = require('./tests');
 
 
 application.use(favicon(path.join(__dirname,'/../react/public/favicon.ico')));
@@ -15,28 +17,19 @@ application.use(bodyParser.urlencoded({ extended:true }));
 
 
 application.get('/connection/agencia/:agencia', (req,res,next) => {
-    console.log('Acesso get realizado com sucesso')
+    let objRes = {};
+    let response = [];
 
-    if (req.params.agencia){
-        config = {
-            host:"",
-            username:"",
-            password:"",
-            port:""
-        } 
-    }
-
-    ssh.connect(config)
-    .then(function (){
-        console.log("****Sucesso na conexão****");
-        commands("ping 8.8.8.8 -c 5");
-        setTimeout(function (){
-            ssh.dispose();
-            console.log("\n****Conexão finalizada****\n");
-        },10000);
-    }).catch(() => {console.log("****Não foi possivel conectar via SSH****")});
-
-    res.send(Object.values({con:"Conexão completa com server NODE"}));
+    testRSDs("127.0.0.1","127.0.0.1")
+    .then((result) =>{
+        console.log("\n***AGENCIA: ",req.params.agencia)
+        result.agencia = req.params.agencia;
+        res.send(result);
+        console.log("\nEnviado para o front\n");
+    }).catch((err)=>{
+        console.log(err);
+        res.agencia(result.agencia = req.params.agencia);
+    });
 });
 
 

@@ -1,6 +1,7 @@
-export default function connectServer (data={},url='',metho="POST"){ 
+export default async function connectServer (data={},url='',metho="POST"){ 
     const objEmpty = (Object.keys(data)==0)
     let config = {};
+
     if (objEmpty){
         config = {
             method: metho,
@@ -14,14 +15,14 @@ export default function connectServer (data={},url='',metho="POST"){
         }
     }
 
-    console.log(config.url);
-
-    fetch(url,config)
-    .then(function (data) {
-        if(data.ok) return data.json();
-    })
-    .then((res) =>{
-        console.log("RES:",res);
-    })
-    .catch(err =>{console.log("err:",err)});
+    return new Promise ((resolve,reject) =>{
+        fetch(url,config)
+        .then(function (data) {
+            if(data.ok) return data.json();
+        }).then((res)=>{
+            resolve(res);
+        }).catch((err) =>{
+            reject(err);
+        })
+    });
 }
