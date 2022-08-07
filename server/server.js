@@ -20,6 +20,8 @@ application.get('/connection/agencia/:agencia', (req,res,next) => {
     let objRes = {};
     let response = [];
 
+    
+
     testRSDs("127.0.0.1","127.0.0.1")
     .then((result) =>{
         console.log("\n***AGENCIA: ",req.params.agencia)

@@ -7,11 +7,12 @@ module.exports = async function testRSDs(ip1,ip2){
     let MPLS = "";
     let INET1 = "";
     let INET2 = "";
+
     let config = {
         host: ip1,
         username: "",
-        password:"",
-        port:""
+        password: "",
+        port:"22"
     } 
 
     return new Promise((resolve,reject)=>{
@@ -28,7 +29,8 @@ module.exports = async function testRSDs(ip1,ip2){
             ssh.execCommand("ping 8.8.8.8 -c 5", {})
             .then(function(result) {
                 let bgpSumm = result.stdout;
-                ssh.execCommand("ping 8.8.8.8 -c 5", {})
+            });
+            ssh.execCommand("ping 8.8.8.8 -c 5", {})
                 .then(function(result) {
                     MPLS = result.stdout;
                     ssh.execCommand("ping 8.8.8.8 -c 5", {})
@@ -38,7 +40,6 @@ module.exports = async function testRSDs(ip1,ip2){
                         console.log("\n****Realizado teste em RSD1****\n");
                     });
                 });
-            });
         }).catch(() => {console.log("****Não foi possivel conectar via SSH****")});
 
         config.host = ip2;
@@ -56,18 +57,24 @@ module.exports = async function testRSDs(ip1,ip2){
             ssh1.execCommand("ping 8.8.8.8 -c 2", {})
             .then(function(result) {
                 let bgpSumm = result.stdout;
-                ssh1.execCommand("ping 8.8.8.8 -c 2", {})
+            });
+            ssh1.execCommand("ping 8.8.8.8 -c 2", {})
                 .then(function(result) {
                     INET1 = result.stdout;
                     ssh1.dispose();
                     console.log("\n****Realizado teste em RSD2****\n");
                 });
-            });
         }).catch(() => {console.log("****Não foi possivel conectar via SSH****")});
         
-        setInterval(()=>{
-            if (MPLS != "" && INET1 != "" && INET2 != "")
-            resolve({MPLS,INET1,INET2});
+        const timer = setInterval(()=>{
+            if (MPLS != "" && INET1 != "" && INET2 != ""){
+                log = treatmentResponse(log);
+                MPLS = treatmentResponse(MPLS);
+                INET1 = treatmentResponse(INET1);
+                INET2 = treatmentResponse(INET2);
+                resolve({log,MPLS,INET1,INET2});
+                clearInterval(timer);
+            }
         },5000)
         setTimeout(()=>{
             reject("*****Tempo excedido*****");
@@ -75,6 +82,24 @@ module.exports = async function testRSDs(ip1,ip2){
     });
 }
 
+function treatmentResponse(response){
+    let res = [];
+    for(let begin=0;begin<response.length;begin++){
+        if (begin==0){
+            const linhaComando = response.slice(begin, response.indexOf('\n',begin));
+            res.push(linhaComando);
+            begin = response.indexOf('\n',begin);
+        }
+        else if (begin <= response.indexOf('\n',begin)){
+            const linhaComando = response.slice(begin+2, response.indexOf('\n',begin));
+            res.push(linhaComando);
+            begin = response.indexOf('\n',begin);
+        }else{
+            break;
+        }
+    }
+    return res;
+}
 
 
 

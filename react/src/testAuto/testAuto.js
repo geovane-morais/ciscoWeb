@@ -13,15 +13,15 @@ function App() {
     return(
         <div>
             <nav>
-                <div id="nav-id" class="nav-class">
-                    <input className="inp inp2" type="text" id="share" placeholder="Agencia (Ex:1030)"></input>
-                    <div className="nav-items" id='inputNav'></div>
+                <div id="nav-id" className="nav-class">
+                    <input className="tipFont fontTam1 inp inp2" type="text" id="share" placeholder="Agencia (Ex:1030)"></input>
+                    <div id='inputNav'></div>
                 </div>
             </nav>
         
             <main>
                 <div className="page" id="page-id">
-                    <p>Sem testes realizados</p>
+                    <p className="fontTam3 nav2">Sem testes realizados</p>
                 </div>
             </main>
         </div>
